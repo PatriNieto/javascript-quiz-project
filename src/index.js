@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     questionContainer.innerHTML += `<p>  ${question.text}</p>`
 
-    progressWidth = quiz.currentQuestionIndex + 10
+    progressWidth = quiz.currentQuestionIndex * 10
 
     progressBar.style.width = `${progressWidth}%`; // This value is hardcoded as a placeholder
 
