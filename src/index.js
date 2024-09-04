@@ -31,6 +31,12 @@ document.addEventListener("DOMContentLoaded", () => {
     new Question("What is the capital of France?", ["Miami", "Paris", "Oslo", "Rome"], "Paris", 1),
     new Question("Who created JavaScript?", ["Plato", "Brendan Eich", "Lea Verou", "Bill Gates"], "Brendan Eich", 2),
     new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
+    new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
+    new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
+    new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
+    new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
+    new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
+    new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
     // Add more questions here
   ];
   const quizDuration = 120; // 120 seconds (2 minutes)
@@ -112,17 +118,8 @@ document.addEventListener("DOMContentLoaded", () => {
     
     
     let progressWidth = 10
-    const questionNode = document.querySelector("#question")
-    let quizShuffledQuestArr = quiz.shuffleQuestions()
-    console.log( quizShuffledQuestArr);
     
-   /*  let unicaPregunta = quizShuffledQuestArr.map((eachQuest,i) => {
-      return eachQuest.text
-      
-    }); */
-
-
-    questionNode.innerHTML += `<p>  ${question.text }</p>` 
+    questionContainer.innerHTML += `<p>  ${question.text }</p>` 
 
     progressWidth = quiz.currentQuestionIndex + 10
     
@@ -142,10 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Loop through the current question `choices`.
       // For each choice create a new radio input with a label, and append it to the choice container.
       // Each choice should be displayed as a radio input element with a label:
-      let respuestasArr = quizShuffledQuestArr.map((eachQuest,i) => {
-        console.log(i);
-        return eachQuest.choices
-      });
+    
 
       
 
@@ -155,9 +149,10 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("p",choices);
       choices.forEach((element, i) => {
         console.log(element);
-        return choiceContainer.innerHTML +=`<input type="radio" name="choice" value="CHOICE TEXT HERE">
+        return choiceContainer.innerHTML +=`<input type="radio" name="choice" value=${element}>
           <label>${element}</label>
         <br>`
+        
          
       });
       
@@ -173,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   
-  function nextButtonHandler () {
+  function nextButtonHandler () { 
     let selectedAnswer; // A variable to store the selected answer value
     //choiceContainer es el 
     /* objeto quiz
@@ -182,26 +177,40 @@ document.addEventListener("DOMContentLoaded", () => {
       this.correctAnswers++
     }
   } */ 
-    console.log(choiceContainer.value);
-    respuesta.value.forEach((element) => {
-      checkAnswer(element)
-    });
+    // console.log("ey",choiceContainer.value);
+    
+    // respuesta.value.forEach((element) => {
+    //   checkAnswer(element)
+    // });
 
-
-
+    
     // YOUR CODE HERE:
     //
     // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
     
-
+    const choices = document.querySelectorAll('input[name="choice"]')
     // 2. Loop through all the choice elements and check which one is selected
-      // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
-      //  When a radio input gets selected the `.checked` property will be set to true.
-      //  You can use check which choice was selected by checking if the `.checked` property is true.
-
+    // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
+    //  When a radio input gets selected the `.checked` property will be set to true.
+    //  You can use check which choice was selected by checking if the `.checked` property is true.
+    choices.forEach((choice) => {
+      if(choice.checked) {
+        selectedAnswer = choice.value
+      }
+    })
+    console.log(selectedAnswer)
       
     // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
       // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
+
+      if(selectedAnswer) {
+        quiz.checkAnswer(selectedAnswer)
+        questionContainer.innerHTML = ""
+        quiz.moveToNextQuestion()
+        choiceContainer.innerHTML = ""
+
+        showQuestion()
+      }
       // Move to the next question by calling the quiz method `moveToNextQuestion()`.
       // Show the next question by calling the function `showQuestion()`.
   }  
@@ -220,7 +229,22 @@ document.addEventListener("DOMContentLoaded", () => {
     endView.style.display = "flex";
     
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored 1 out of 1 correct answers!`; // This value is hardcoded as a placeholder
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${questions.length} correct answers!`; // This value is hardcoded as a placeholder
   }
   
+});
+
+let botonRestartNode = document.querySelector("#restartButton")
+
+botonRestartNode.addEventListener("click",() => {
+  endView.style.display = "none";
+  quizView.style.display = "block";
+  quiz.currentQuestionIndex = 0
+  quiz.correctAnswers = 0
+  quiz.shuffleQuestions();
+  // new Quiz(questions, quizDuration, quizDuration);
+  quiz.getQuestion();
+  showQuestion();
+
+
 });

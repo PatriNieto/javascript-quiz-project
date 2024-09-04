@@ -19,6 +19,9 @@ class Quiz {
   // 3.
   moveToNextQuestion() {
     this.currentQuestionIndex++
+    console.log(this.correctAnswers)
+    //delete this.
+    //this.choiceContainer.innerHTML = ""
   }
 
   // 4.
@@ -39,9 +42,10 @@ class Quiz {
 
   // 5.
   checkAnswer(answer) {
-    if (answer) {
+    if (answer == this.questions[this.currentQuestionIndex].answer) {
       this.correctAnswers++
-    }
+console.log(typeof answer);    }
+console.log(typeof this.questions[this.currentQuestionIndex].answer);    
   }
 
   // 6.
