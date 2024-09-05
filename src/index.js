@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   nextButton.addEventListener("click", nextButtonHandler);
 
-
+  
   const botonRestartNode = document.querySelector("#restartButton")
 
   botonRestartNode.addEventListener("click", () => {
@@ -182,7 +182,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   function nextButtonHandler() {
-    let selectedAnswer; // A variable to store the selected answer value
+    let selectedAnswer;
+    
+    // A variable to store the selected answer value
     //choiceContainer es el 
     /* objeto quiz
   checkAnswer(answer) {
