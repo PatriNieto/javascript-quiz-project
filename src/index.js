@@ -27,17 +27,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Array with the quiz questions
   const questions = [
-    new Question("What is 2 + 2?", ["3", "4", "5", "6"], "4", 1),
-    new Question("What is the capital of France?", ["Miami", "Paris", "Oslo", "Rome"], "Paris", 1),
-    new Question("Who created JavaScript?", ["Plato", "Brendan Eich", "Lea Verou", "Bill Gates"], "Brendan Eich", 2),
-    new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
-    new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
-    new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
-    new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
-    new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
-    new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
-    new Question("What is the mass–energy equivalence equation?", ["E = mc^2", "E = m*c^2", "E = m*c^3", "E = m*c"], "E = mc^2", 3),
-    // Add more questions here
+    new Question("¿Cuál es el récord de la mayor cantidad de camisetas puestas al mismo tiempo?",
+      ["150 camisetas", "247 camisetas", "305 camisetas", "430 camisetas"],
+      "247 camisetas", 2),
+
+    new Question("¿Cuántos plátanos puede pelar una persona con los pies en un minuto?",
+      ["12 plátanos", "21 plátanos", "8 plátanos", "33 plátanos"],
+      "21 plátanos", 3),
+
+    new Question("¿Cuál es el récord de la mayor cantidad de cucharas equilibradas en una cara humana?",
+      ["22 cucharas", "31 cucharas", "17 cucharas", "50 cucharas"],
+      "31 cucharas", 2),
+
+    new Question("¿Qué animal tiene el récord de explotar la mayor cantidad de globos en un minuto?",
+      ["Un gato", "Un mono", "Un perro", "Un loro"],
+      "Un perro", 1),
+
+    new Question("¿Cuál es la mayor distancia que un avión ha sido arrastrado usando solo una barba?",
+      ["50 metros", "30 metros", "20 metros", "10 metros"],
+      "20 metros", 3),
+    new Question("¿Cuál es el récord de la mayor cantidad de huevos rotos con la cabeza en un minuto?",
+      ["30 huevos", "70 huevos", "150 huevos", "120 huevos"],
+      "150 huevos", 3),
+
+    new Question("¿Cuál es la mayor cantidad de notas adhesivas (Post-its) pegadas en el cuerpo de una persona en un minuto?",
+      ["58 Post-its", "97 Post-its", "107 Post-its", "120 Post-its"],
+      "107 Post-its", 2),
+
+    new Question("¿Cuál es el número más alto de tatuajes de un mismo personaje de caricatura en el cuerpo de una persona?",
+      ["153 tatuajes", "203 tatuajes", "78 tatuajes", "265 tatuajes"],
+      "203 tatuajes", 3),
+
+    new Question("¿Cuál es el récord de la mayor cantidad de pelotas de ping-pong atrapadas con los palillos en un minuto?",
+      ["25 pelotas", "35 pelotas", "50 pelotas", "70 pelotas"],
+      "35 pelotas", 2),
+
+    new Question("¿Cuántas vueltas alrededor de su cola puede dar un perro en un minuto para establecer un récord Guinness?",
+      ["50 vueltas", "90 vueltas", "105 vueltas", "155 vueltas"],
+      "105 vueltas", 2)
+
+
+
   ];
   const quizDuration = 120; // 120 seconds (2 minutes)
 
@@ -57,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
   let seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
 
-  
+
   // Display the time remaining in the time remaining container
   const timeRemainingContainer = document.getElementById("timeRemaining");
 
@@ -70,10 +100,9 @@ document.addEventListener("DOMContentLoaded", () => {
   /************  TIMER  ************/
 
 
-  let timer = quiz.timeRemaining
-  
+  let timer;
 
-  resStar(timer)
+  resStar()
 
   /************  EVENT LISTENERS  ************/
 
@@ -83,7 +112,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const botonRestartNode = document.querySelector("#restartButton")
 
   botonRestartNode.addEventListener("click", () => {
-    resStar(timer)
+
+
+    resStar();
     endView.style.display = "none";
     quizView.style.display = "block";
     quiz.currentQuestionIndex = 0
@@ -91,6 +122,7 @@ document.addEventListener("DOMContentLoaded", () => {
     quiz.shuffleQuestions();
     // new Quiz(questions, quizDuration, quizDuration);
     showQuestion();
+
 
 
   });
@@ -110,30 +142,26 @@ document.addEventListener("DOMContentLoaded", () => {
   // showQuestion() - Displays the current question and its choices
   // nextButtonHandler() - Handles the click on the next button
   // showResults() - Displays the end view and the quiz results
-function resStar (timer){
-  const remainingId = setInterval(() => {
-    if (timer > 0) {
-      timer--
-      minutes = Math.floor(timer / 60).toString().padStart(2, "0");
-      seconds = (timer % 60).toString().padStart(2, "0");
-      timeRemainingContainer.innerText = `${minutes}:${seconds}`
-      
-    } else if (timer === 0) {
-      clearInterval(remainingId)
+  function resStar() {
+    quiz.timeRemaining = quizDuration
 
-      quizView.style.display = "none";
-      endView.style.display = "flex";
-      showResults()
-  
-    }
-    
-  }, 1000)
-}
+    minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+    seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+    timeRemainingContainer.innerText = `${minutes}:${seconds}`;
+
+    timer = setInterval(() => {
+      if (quiz.timeRemaining === 0) {
+        showResults()
+      }
+      quiz.timeRemaining--
+      minutes = Math.floor(quiz.timeRemaining / 60).toString().padStart(2, "0");
+      seconds = (quiz.timeRemaining % 60).toString().padStart(2, "0");
+      timeRemainingContainer.innerText = `${minutes}:${seconds}`
+    }, 1000)
+
+  }
 
   function showQuestion() {
-
-    //preguntar por que las variables tienen que ir aqui 
-
 
     // If the quiz has ended, show the results
     if (quiz.hasEnded()) {
@@ -154,63 +182,27 @@ function resStar (timer){
     let progressWidth = 10
 
     questionContainer.innerHTML += `<p>  ${question.text}</p>`
-
     progressWidth = quiz.currentQuestionIndex * 10
-
     progressBar.style.width = `${progressWidth}%`; // This value is hardcoded as a placeholder
+    questionCount.innerText = `Question ${quiz.currentQuestionIndex + 1} of 10`;
 
-    questionCount.innerText = `Question ${quiz.currentQuestionIndex + 1} of 10`; //  This value is hardcoded as a placeholder
 
-    // YOUR CODE HERE:
-    //
-    // 1. Show the question
-    // Update the inner text of the question container element and show the question text
-
-    // 2. Update the green progress bar
-    // Update the green progress bar (div#progressBar) width so that it shows the percentage of questions answered
-
-    // 3. Update the question count text 
-    // Update the question count (div#questionCount) show the current question out of total questions
-
-    // 4. Create and display new radio input element with a label for each choice.
-    // Loop through the current question `choices`.
-    // For each choice create a new radio input with a label, and append it to the choice container.
-    // Each choice should be displayed as a radio input element with a label:
-
-    //questionNode.innerHTML += `<p> Hola ${unicaPregunta[0] }</p>` 
     let choices = question.choices
 
     console.log("p", choices);
     choices.forEach((element, i) => {
       console.log(element);
-      return choiceContainer.innerHTML += `<input type="radio" name="choice" value="${element}">
-          <label>${element}</label>
+      return choiceContainer.innerHTML += `<label style ="cursor: pointer;"><input type="radio" name="choice" value="${element}">${element}</label>
         <br>`
 
 
     });
-
-    // Hint 1: You can use the `document.createElement()` method to create a new element.
-    // Hint 2: You can use the `element.type`, `element.name`, and `element.value` properties to set the type, name, and value of an element.
-    // Hint 3: You can use the `element.appendChild()` method to append an element to the choices container.
-    // Hint 4: You can use the `element.innerText` property to set the inner text of an element.
-
   }
 
   function nextButtonHandler() {
     let selectedAnswer;
 
-    // A variable to store the selected answer value
-    
-    // YOUR CODE HERE:
-    //
-    // 1. Get all the choice elements. You can use the `document.querySelectorAll()` method.
-
     const choices = document.querySelectorAll('input[name="choice"]')
-    // 2. Loop through all the choice elements and check which one is selected
-    // Hint: Radio input elements have a property `.checked` (e.g., `element.checked`).
-    //  When a radio input gets selected the `.checked` property will be set to true.
-    //  You can use check which choice was selected by checking if the `.checked` property is true.
     choices.forEach((choice) => {
       if (choice.checked) {
         selectedAnswer = choice.value
@@ -218,8 +210,6 @@ function resStar (timer){
     })
     console.log(selectedAnswer)
 
-    // 3. If an answer is selected (`selectedAnswer`), check if it is correct and move to the next question
-    // Check if selected answer is correct by calling the quiz method `checkAnswer()` with the selected answer.
 
     if (selectedAnswer) {
       quiz.checkAnswer(selectedAnswer)
@@ -227,24 +217,29 @@ function resStar (timer){
 
       showQuestion()
     }
-    // Move to the next question by calling the quiz method `moveToNextQuestion()`.
-    // Show the next question by calling the function `showQuestion()`.
+  
   }
-
-
+let giff2="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExOW1hbzhuaTg0bXFsYXEyejY0Z29ycTc1MzBrdnQ2a2JsaGdtYWFxZiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7TKr3nzbh5WgCFxe/giphy.gif"
+let giff ="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExcWNpcWRnOWV5b2FvNmI5dmg4aHlzdzc4YjJtcnIxb3I3bG5wa2ZvNCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/mIZ9rPeMKefm0/giphy.gif"
   function showResults() {
+    clearInterval(timer)
 
     // YOUR CODE HERE:
-    //    
 
-    // 1. Hide the quiz view (div#quizView)
+    // 1. Hide the quiz view (div#quizView)n
     quizView.style.display = "none";
 
     // 2. Show the end view (div#endView)
     endView.style.display = "flex";
 
     // 3. Update the result container (div#result) inner text to show the number of correct answers out of total questions
-    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${questions.length} correct answers!`; // This value is hardcoded as a placeholder
+    resultContainer.innerText = `You scored ${quiz.correctAnswers} out of ${questions.length} correct answers!`
+    if(quiz.correctAnswers >= 5){
+      resultContainer.innerHTML += `<img src=${giff} alt="imagen de ganador">` // This value is hardcoded as a placeholder
+    } else {
+      resultContainer.innerHTML += `<img src=${giff2} alt="imagen de ganador">` // This value is hardcoded as a placeholder
+    }
+    
   }
 
 });

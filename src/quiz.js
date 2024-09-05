@@ -1,3 +1,6 @@
+
+const contentNode = document.querySelector(".container");
+
 class Quiz {
   // YOUR CODE HERE:
   //
@@ -41,11 +44,41 @@ class Quiz {
   }
 
   // 5.
+  
   checkAnswer(answer) {
+    
     if (answer == this.questions[this.currentQuestionIndex].answer) {
       this.correctAnswers++
-console.log(typeof answer);    }
-console.log(typeof this.questions[this.currentQuestionIndex].answer);    
+      //aqui tenemos que indicar que pase a color verde
+      contentNode.style.backgroundColor = "#4caf50"
+      contentNode.style.transition="background-color";
+      contentNode.style.transitionDuration=" 0.5s" ;
+      contentNode.style.transitionTimeFuction=" ease";
+
+      setTimeout(() => {
+        contentNode.style.backgroundColor = "white"
+      contentNode.style.transition="background-color";
+      contentNode.style.transitionDuration=" 0.5s" ;
+      contentNode.style.transitionTimeFuction=" ease";
+      }, 
+      500);
+    } 
+     else {
+      //aqui tenemos que indicar que pase a color rojo
+      contentNode.style.backgroundColor = "#fa756b"
+      contentNode.style.transition="background-color";
+      contentNode.style.transitionDuration=" 0.5s" ;
+      contentNode.style.transitionTimeFuction=" ease";
+
+      setTimeout(() => {
+        contentNode.style.backgroundColor = "white"
+      contentNode.style.transition="background-color";
+      contentNode.style.transitionDuration=" 0.5s" ;
+      contentNode.style.transitionTimeFuction=" ease";
+      }, 
+      500);
+
+    } 
   }
 
   // 6.
@@ -55,6 +88,7 @@ console.log(typeof this.questions[this.currentQuestionIndex].answer);
     } else if (this.currentQuestionIndex === this.questions.length) {
       return true
     }
+    
   }
   filterQuestionsByDifficulty(difficulty) {
     if (difficulty >= 1 && difficulty <= 3) {

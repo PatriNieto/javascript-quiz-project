@@ -22,8 +22,9 @@ header {
     max-width: 600px;
     margin: auto;
     padding: 20px;
-    background: #fff;
+    background: #ffffff;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    border-radius: 10px;
 }
 
 #quizView, #endView {
@@ -49,10 +50,12 @@ button {
     cursor: pointer;
     font-size: 16px;
     width: 160px;
+    box-shadow: 7px 5px 10px 4px #A5A5A5;
 }
 
 .button-primary {
     background-color: #4caf50;
+    
 }
 
 .button-primary:hover {
@@ -100,6 +103,19 @@ input[type="radio"] {
     min-height: 300px;
     display: flex;
     flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: transform 0.6s ease-in-out, opacity 0.6s ease-in-out;
+    opacity: 1;
+    margin-bottom: 10px;
+    padding:0px 20px 20px 20px;
 }
 
 #choices {
@@ -115,6 +131,19 @@ input[type="radio"] {
     margin: 0 auto;
     margin-top: 20px;
     margin-bottom: 12px;
+}
+#result{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30;
+    flex-direction: column;
+}
+#result img{
+    margin-top: 20px;
+    width: 100px;
+    height: auto;
+
 }
 
 #quizDescription {
